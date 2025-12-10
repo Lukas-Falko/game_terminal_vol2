@@ -16,6 +16,7 @@ public class app {
         funkcje.Random(dane); 
         funkcje.randomHexFunc(dane);
         funkcje.odpowiedzFunc(dane);
+        //funkcje.login(dane);
         
         //menu
         //funkcje.powitalny();
@@ -56,6 +57,47 @@ public class app {
                     
                     funkcje.menu_ustawien(in);
 
+                    System.out.print("Wybierz opcję: ");
+                    in.input_s = s.next();
+
+                    switch(in.input_s){
+                        case "1":{
+
+                            do{
+                                System.out.println("----Wybierz poziom trudnosci----");
+                                System.out.println("aktualny poziom: " + dane.aktualny);
+                                System.out.println("");
+                                System.out.println("1 - latwy");
+                                System.out.println("2 - sredni ");
+                                System.out.println("3 - trudny");
+                                System.out.println("0 - wyjscie");
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("Wpisz: ");
+
+                                in.input_a = s.next();
+
+                                
+
+                                if(in.input_a.equals("1") ){
+                                    dane.poziom = 1;
+                                    dane.aktualny = "latwy";
+                                }if(in.input_a.equals("2")){
+                                   dane.poziom = 2;       
+                                   dane.aktualny = "sredni";
+                                }if( in.input_a.equals("3")){
+                                    dane.poziom = 3;
+                                    dane.aktualny = "trudny";
+                                }
+
+                            }while(!in.input_a.equals("0"));
+                            break;
+                            
+                        }
+                    }
+
+                    
+
                 }while(!in.input_s.equals("0"));
             }
 
@@ -78,26 +120,56 @@ public class app {
 
     static class Funkcje{
 
+        void login(Dane dane){
+
+            do{
+                System.out.print("Wpisz login: ");
+                String temp_login = s.next();
+                System.out.print("Wpisz Haslo: ");
+                String temp_haslo = s.next();
+
+                if(temp_login.equals(dane.login) && temp_haslo.equals(dane.login)){
+                    dane.attempts2 = true; 
+
+                    System.out.println("");
+                    System.out.println("Witamy !");
+                    System.out.println("");
+
+                }else{
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("Wpisz login i haslo ponowanie");
+                    System.out.println("");
+                    System.out.println("");
+                }
+
+                
+
+            }while(dane.attempts2 == false);
+            
+        }
+
         void menu_ustawien(Inputs inputs){
-           
+            System.out.println("");
+            System.out.println("");
             System.out.println("===== MENU USTAWIEŃ =====");
             System.out.println("");
             System.out.println("1 - zmien poziom trudnosci");
-            System.out.println("2 - Zmień hasło");
-            System.out.println("3 - Resetuj ustawienia");
             System.out.println("0 - Powrót do menu głównego");
             System.out.println("");
 
-            System.out.print("Wybierz opcję: ");
-            inputs.input_s = s.next();
+            
         }
 
         void Main_menu(Inputs inputs){
-            Scanner s = new Scanner(System.in);
+            
             
             // wyświetlenie menu głównego
+            System.out.println("*FALLOUT*");
+            System.out.println("");
+            System.out.println("");
             System.out.println("===== MENU GŁÓWNE =====");
-            System.out.println("1 - fallout");
+            System.out.println("1 - Graj");
             System.out.println("2 - Ustawienia");
             System.out.println("3 - Informacje");
             System.out.println("0 - Wyjście");
@@ -163,7 +235,7 @@ public class app {
 
         void wyborTrudnosci(Inputs inputs){
             
-            Scanner s = new Scanner(System.in);
+            
             
             for(int i=0; i<5; i++){
                 System.out.println("");
@@ -179,6 +251,8 @@ public class app {
             System.out.print("Wpisz liczbe jako poziom trudnosci: "); 
             
             inputs.input = s.next();
+
+
 
 
         }
@@ -208,6 +282,8 @@ public class app {
     }
 
     static class Inputs {
+
+        String input_a ="";
         
         String input_s = "";
 
@@ -216,9 +292,19 @@ public class app {
 
     static class Dane {
 
+        String aktualny = "latwy";
+
+        int poziom = 1;
+
+        String login = "lukasz";
+
+        String haslo = "haslo";
+
         String good_ans ="";
 
         int attempts = 4;
+
+        boolean attempts2 = false;
 
         int y = 0;
 
@@ -248,4 +334,6 @@ public class app {
     static class Login{
 
     }
+
+    
 }
