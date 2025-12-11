@@ -1,4 +1,8 @@
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -16,15 +20,14 @@ public class app {
         funkcje.Random(dane); 
         funkcje.randomHexFunc(dane);
         funkcje.odpowiedzFunc(dane);
-        //funkcje.login(dane);
+        funkcje.login(dane, in);
         
         //menu
         //funkcje.powitalny();
-        
         do{
 
             
-            funkcje.Main_menu(in);
+            funkcje.Main_menu(in, dane);
 
             switch (in.input){
 
@@ -40,16 +43,9 @@ public class app {
 
                 System.out.println("");
                 System.out.println("Zakończono rundę. Powrót do menu...");
-
                 dane.attempts = dane.attempts + 4;
-
-                
                 break;
             }
-
-            
-
-            
 
             case "2":{ //ustawienia
 
@@ -120,32 +116,61 @@ public class app {
 
     static class Funkcje{
 
-        void login(Dane dane){
+        void login(Dane dane, Inputs in){
 
             do{
-                System.out.print("Wpisz login: ");
-                String temp_login = s.next();
-                System.out.print("Wpisz Haslo: ");
-                String temp_haslo = s.next();
+                System.out.println("Witaj w systemie logowania");
+                System.out.println("");
+                System.out.println("1 - logowanie");
+                System.out.println("2 - Rejestracja");
+                System.out.println("");
+                System.out.print("Wpisz cos: ");
+                String x = s.next();
 
-                if(temp_login.equals(dane.login) && temp_haslo.equals(dane.login)){
-                    dane.attempts2 = true; 
+                switch (x){
 
-                    System.out.println("");
-                    System.out.println("Witamy !");
-                    System.out.println("");
+                    case "1":{ //logowanie
 
-                }else{
-                    System.out.println("");
-                    System.out.println("");
-                    System.out.println("Wpisz login i haslo ponowanie");
-                    System.out.println("");
-                    System.out.println("");
+                        do{
+                            System.out.print("Wpisz login: ");
+                            in.input_b = s.next();
+                            String temp_login = in.input_b;
+                            if(in.input_b.equals("0")){
+                                break;
+                            }
+
+                            System.out.print("Wpisz haslo: ");
+                            in.input_b = s.next();
+                            String temp_haslo = in.input_b;
+
+                            if(temp_login.equals(dane.login) && temp_haslo.equals(dane.haslo)){
+                                dane.haslo_h = true; 
+                                dane.login_h = true;
+
+                                System.out.println("");
+                                System.out.println("Witamy !");
+                                System.out.println("");
+                                break;
+
+                            }else{
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("Wpisz login i haslo ponowanie");
+                                System.out.println("");
+                                System.out.println("");
+                            }
+                        }while(!in.input_b.equals("0"));
+                       break; 
+                    }
+
+                    case "2":{ // rejestracja
+                        rejestracja(dane);
+                         
+                        
+                    }
                 }
 
-                
-
-            }while(dane.attempts2 == false);
+            }while(dane.login_h == false && dane.haslo_h == false );
             
         }
 
@@ -161,12 +186,13 @@ public class app {
             
         }
 
-        void Main_menu(Inputs inputs){
+        void Main_menu(Inputs inputs, Dane dane){
             
             
             // wyświetlenie menu głównego
             System.out.println("*FALLOUT*");
             System.out.println("");
+            System.out.println("Witaj: " + dane.login);
             System.out.println("");
             System.out.println("===== MENU GŁÓWNE =====");
             System.out.println("1 - Graj");
@@ -192,6 +218,9 @@ public class app {
         }
 
         void wypiszMenu(Inputs in, Dane dane){
+
+
+            
    
             System.out.println("");
             System.out.println("");
@@ -206,6 +235,11 @@ public class app {
             System.out.println("!!! WARNING: LOCKOUT IMMINENT !!!");
             System.out.println("");
             System.out.println("" + dane.attempts + " ATTEMPT(S) LEFT:");
+            System.out.println("");
+            System.out.println("Poprawna odp: " + dane.good_ans);
+
+            System.out.println("");
+            System.out.println("Wspolne: " + dane.wspolne);
             
             for(int i = 0; i<20; i+=2){
                 System.out.println(dane.RandomHex[i] + dane.tabRandomSlowo[i]+ "   " + dane.RandomHex[i + 1] + dane.tabRandomSlowo[i + 1]);
@@ -216,8 +250,30 @@ public class app {
             
             System.out.println("");
             System.out.println("Wpisz odp: ");
-
             in.input = s.next();
+            
+
+            
+
+            if(in.input.equals(dane.good_ans)){
+                        dane.attempts = dane.attempts - 10;
+                    }else{
+                        String input = in.input;
+                        String[] inputT = input.split("");
+                        String odp = dane.good_ans;
+                        String[] odpT = odp.split("");
+                        
+
+                        for(int n =0; n < inputT.length; n++){
+                            for(int i =0; i < odpT.length; i++){
+                                if(inputT[n].equals(odpT[i])){
+                                    dane.wspolne = dane.wspolne + 1;
+                                }
+                            }
+                        }
+                    }
+
+            
             
         }
 
@@ -279,9 +335,42 @@ public class app {
             System.out.println("Gotowe!");
 
         }
+
+        static void rejestracja(Dane dane) {
+
+                System.out.print("Login: ");
+                String login = s.next();
+
+                System.out.print("Hasło: ");
+                String haslo = s.next();
+
+                System.out.print("Email: ");
+                String email = s.next();
+
+                dane.users.add(new User(login, haslo, email));
+
+                System.out.println("Dodano użytkownika.");
+
+                zapiszDoPliku(dane); // NADPISUJE plik aktualną listą
+        }
+
+        static void zapiszDoPliku(Dane dane) {
+
+            try (FileWriter fw = new FileWriter("users.txt", false)) { // false = NADPISUJE cały plik
+
+                for (User u : dane.users) {
+                    fw.write(u.login + ";" + u.haslo + ";" + u.email + "\n");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     static class Inputs {
+
+        String input_b ="";
 
         String input_a ="";
         
@@ -291,6 +380,14 @@ public class app {
     }
 
     static class Dane {
+
+        static List<User> users = new ArrayList<>();
+
+        static {
+            users.add(new User("admin", "admin123", "admin@mail.com"));
+        }
+
+        int wspolne = 0;
 
         String aktualny = "latwy";
 
@@ -304,7 +401,8 @@ public class app {
 
         int attempts = 4;
 
-        boolean attempts2 = false;
+        boolean login_h = false;
+        boolean haslo_h = false;
 
         int y = 0;
 
@@ -335,5 +433,17 @@ public class app {
 
     }
 
-    
+    static class User {
+
+        String login;
+        String haslo;
+        String email;
+
+        
+        User(String login, String haslo, String email) {
+            this.login = login;
+            this.haslo = haslo;
+            this.email = email;
+        }
+    }   
 }
