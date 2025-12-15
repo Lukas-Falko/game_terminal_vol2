@@ -1,6 +1,3 @@
-
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -164,9 +161,9 @@ public class app {
                     }
 
                     case "2":{ // rejestracja
-                        rejestracja(dane);
-                         
                         
+                        System.out.println("Testowa funkcja");
+                        break;
                     }
                 }
 
@@ -260,19 +257,7 @@ public class app {
             if(in.input.equals(dane.good_ans)){
                         dane.attempts = dane.attempts - 10;
                     }else{
-                        String input = in.input;
-                        String[] inputT = input.split("");
-                        String odp = dane.good_ans;
-                        String[] odpT = odp.split("");
                         
-
-                        for(int n =0; n < inputT.length; n++){
-                            for(int i =0; i < odpT.length; i++){
-                                if(inputT[n].equals(odpT[i])){
-                                    dane.wspolne = dane.wspolne + 1;
-                                }
-                            }
-                        }
                     }
 
             
@@ -338,36 +323,8 @@ public class app {
 
         }
 
-        static void rejestracja(Dane dane) {
-
-                System.out.print("Login: ");
-                String login = s.next();
-
-                System.out.print("Hasło: ");
-                String haslo = s.next();
-
-                System.out.print("Email: ");
-                String email = s.next();
-
-                dane.users.add(new User(login, haslo, email));
-
-                System.out.println("Dodano użytkownika.");
-
-                zapiszDoPliku(dane); // NADPISUJE plik aktualną listą
-        }
-
-        static void zapiszDoPliku(Dane dane) {
-
-            try (FileWriter fw = new FileWriter("users.txt", false)) { // false = NADPISUJE cały plik
-
-                for (User u : dane.users) {
-                    fw.write(u.login + ";" + u.haslo + ";" + u.email + "\n");
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        
+       
     }
 
     static class Inputs {
