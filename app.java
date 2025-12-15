@@ -23,7 +23,7 @@ public class app {
         funkcje.login(dane, in);
         
         //menu
-        //funkcje.powitalny();
+        funkcje.powitalny();
         do{
 
             
@@ -190,6 +190,8 @@ public class app {
             
             
             // wyświetlenie menu głównego
+            System.out.println("");
+            System.out.println("");
             System.out.println("*FALLOUT*");
             System.out.println("");
             System.out.println("Witaj: " + dane.login);
@@ -383,19 +385,15 @@ public class app {
 
         static List<User> users = new ArrayList<>();
 
-        static {
-            users.add(new User("admin", "admin123", "admin@mail.com"));
-        }
-
         int wspolne = 0;
 
         String aktualny = "latwy";
 
         int poziom = 1;
 
-        String login = "lukasz";
+        String login = "Falko";
 
-        String haslo = "haslo";
+        String haslo = "123";
 
         String good_ans ="";
 
