@@ -7,13 +7,13 @@ public class app {
 
     public static Scanner s = new Scanner(System.in);
     
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException { //odpala program
         
         Inputs in = new Inputs();
         Dane dane = new Dane();
         Funkcje funkcje = new Funkcje();
         
-        //wstepne ladowanie
+        //wstepne ładowanie
         funkcje.Random(dane); 
         funkcje.randomHexFunc(dane);
         funkcje.odpowiedzFunc(dane);
@@ -23,7 +23,6 @@ public class app {
         funkcje.powitalny();
         do{
 
-            
             funkcje.Main_menu(in, dane);
 
             switch (in.input){
@@ -89,19 +88,7 @@ public class app {
                         }
                     }
 
-                    
-
                 }while(!in.input_s.equals("0"));
-            }
-
-            case "3":{ // informacje
-                break;
-            }
-            case "4":{
-                
-            }
-            case "5":{
-                
             }
 
         }
@@ -111,9 +98,10 @@ public class app {
 
     }
 
-    static class Funkcje{
 
-        void login(Dane dane, Inputs in){
+    static class Funkcje{ // klasa z funkcjami
+
+        void login(Dane dane, Inputs in){ //pierwsze gui do logowania
 
             do{
                 System.out.println("Witaj w systemie logowania");
@@ -170,8 +158,32 @@ public class app {
             }while(dane.login_h == false && dane.haslo_h == false );
             
         }
+        
+        void Main_menu(Inputs inputs, Dane dane){ //menu glowne porgramu 1/graj 2/ustawienia ..itp
+                    
+                    
+                    // wyświetlenie menu głównego
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("*FALLOUT*");
+                    System.out.println("");
+                    System.out.println("Witaj: " + dane.login);
+                    System.out.println("");
+                    System.out.println("===== MENU GŁÓWNE =====");
+                    System.out.println("1 - Graj");
+                    System.out.println("2 - Ustawienia");
+                    System.out.println("3 - Informacje");
+                    System.out.println("0 - Wyjście");
+                    
 
-        void menu_ustawien(Inputs inputs){
+
+                    System.out.print("Wybierz opcję: ");
+                    
+                    inputs.input = s.next();
+
+        }
+
+        void menu_ustawien(Inputs inputs){ // menu glowne usawein trudnosci ..itp
             System.out.println("");
             System.out.println("");
             System.out.println("===== MENU USTAWIEŃ =====");
@@ -183,31 +195,7 @@ public class app {
             
         }
 
-        void Main_menu(Inputs inputs, Dane dane){
-            
-            
-            // wyświetlenie menu głównego
-            System.out.println("");
-            System.out.println("");
-            System.out.println("*FALLOUT*");
-            System.out.println("");
-            System.out.println("Witaj: " + dane.login);
-            System.out.println("");
-            System.out.println("===== MENU GŁÓWNE =====");
-            System.out.println("1 - Graj");
-            System.out.println("2 - Ustawienia");
-            System.out.println("3 - Informacje");
-            System.out.println("0 - Wyjście");
-            
-
-
-            System.out.print("Wybierz opcję: ");
-            
-            inputs.input = s.next();
-
-        }
- 
-        void Random(Dane dane){
+        void Random(Dane dane){ // funkcja do wypelniania tablicy randomowymi slowami do gry fallowut 
 
             Random r = new Random();
 
@@ -216,7 +204,7 @@ public class app {
             }
         }
 
-        void wypiszMenu(Inputs in, Dane dane){
+        void wypiszMenu(Inputs in, Dane dane){ // funcka wypisawnia menu w grze fallout
 
 
             
@@ -244,27 +232,26 @@ public class app {
                 System.out.println(dane.RandomHex[i] + dane.tabRandomSlowo[i]+ "   " + dane.RandomHex[i + 1] + dane.tabRandomSlowo[i + 1]);
 
             }
-
-            
-            
+  
             System.out.println("");
             System.out.println("Wpisz odp: ");
             in.input = s.next();
             
-
-            
-
             if(in.input.equals(dane.good_ans)){
-                        dane.attempts = dane.attempts - 10;
-                    }else{
+                dane.attempts = dane.attempts - 10;
+            }else{
                         
-                    }
+                char[] input = in.input.toCharArray(); //tablica ze słowem z inputu
+                char[] odp = dane.good_ans.toCharArray(); // tablica z poprawną odpowiedzią
 
-            
-            
+                for(int i = 0; i<odp.length; i++){
+                    
+                }
+         
+            }  
         }
 
-        void randomHexFunc(Dane dane){
+        void randomHexFunc(Dane dane){ // random hex number cos w tylu 0x%04X
 
             Random r = new Random();
             
@@ -276,7 +263,7 @@ public class app {
             }
         }
 
-        void wyborTrudnosci(Inputs inputs){
+        void wyborTrudnosci(Inputs inputs){ // gui wyboru trudnosci 
             
             
             
@@ -300,14 +287,14 @@ public class app {
 
         }
 
-        void odpowiedzFunc(Dane dane){
+        void odpowiedzFunc(Dane dane){ // losowanie odpowiedzi z bazy
 
             Random r = new Random();
 
             dane.good_ans = dane.tabRandomSlowo[r.nextInt(dane.tabRandomSlowo.length)];
         }
 
-        void powitalny() throws InterruptedException {
+        void powitalny() throws InterruptedException { // naimacja ładwoania "krecenie sie spin me / " 
             String[] spinner = {"|", "/", "-", "\\"};
             int delay = 200;
 
@@ -320,14 +307,14 @@ public class app {
             }
 
             System.out.println("Gotowe!");
+            System.out.println("");
+            System.out.println("");
 
         }
-
-        
-       
     }
 
-    static class Inputs {
+
+    static class Inputs { // zmienne inputow
 
         String input_b ="";
 
@@ -338,7 +325,8 @@ public class app {
         String input = "";
     }
 
-    static class Dane {
+
+    static class Dane {  
 
         static List<User> users = new ArrayList<>();
 
@@ -383,22 +371,5 @@ public class app {
             "excep", "iterat", "recurs", "syntax"
         };
     }
-    
-    static class Login{
-
-    }
-
-    static class User {
-
-        String login;
-        String haslo;
-        String email;
-
-        
-        User(String login, String haslo, String email) {
-            this.login = login;
-            this.haslo = haslo;
-            this.email = email;
-        }
-    }   
+     
 }
