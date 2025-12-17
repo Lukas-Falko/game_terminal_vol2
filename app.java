@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,7 +18,7 @@ public class app {
         funkcje.login(dane, in);
         
         //menu
-        funkcje.powitalny();
+        //funkcje.powitalny();
         do{
 
             funkcje.Main_menu(in, dane);
@@ -83,16 +81,13 @@ public class app {
                                 }
 
                             }while(!in.input_a.equals("0"));
-                            break;
                             
+                            break;    
                         }
                     }
-
                 }while(!in.input_s.equals("0"));
             }
-
         }
-
 
         }while(!in.input.equals("0"));
 
@@ -206,9 +201,6 @@ public class app {
 
         void wypiszMenu(Inputs in, Dane dane){ // funcka wypisawnia menu w grze fallout
 
-
-            
-   
             System.out.println("");
             System.out.println("");
             System.out.println("");
@@ -238,13 +230,29 @@ public class app {
             in.input = s.next();
             
             if(in.input.equals(dane.good_ans)){
-                dane.attempts = dane.attempts - 10;
+                dane.attempts = dane.attempts - 10;    
             }else{
+
+                dane.wspolne =0;
                         
                 char[] input = in.input.toCharArray(); //tablica ze słowem z inputu
                 char[] odp = dane.good_ans.toCharArray(); // tablica z poprawną odpowiedzią
+                boolean[] odpUsed = new boolean[odp.length];
 
-                for(int i = 0; i<odp.length; i++){
+                for(int i = 0; i<input.length; i++){
+
+                    for(int x = 0; x<odp.length; x++){
+
+                        if(!odpUsed[x] && input[i] == (odp[x])){
+
+                            odpUsed[x] = false;
+                            dane.wspolne = dane.wspolne + 1;
+                            break;
+
+                        }
+                    }
+
+                    
                     
                 }
          
@@ -328,7 +336,7 @@ public class app {
 
     static class Dane {  
 
-        static List<User> users = new ArrayList<>();
+        
 
         int wspolne = 0;
 
