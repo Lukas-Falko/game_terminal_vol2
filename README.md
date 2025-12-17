@@ -31,3 +31,5 @@
 - git add .
 - git commit -m "Twój opis zmian"
 - git push origin main
+
+

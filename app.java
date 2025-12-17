@@ -1,6 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class app {
 
     public static Scanner s = new Scanner(System.in);
@@ -96,7 +97,12 @@ public class app {
 
     static class Funkcje{ // klasa z funkcjami
 
+       
+
         void login(Dane dane, Inputs in){ //pierwsze gui do logowania
+
+
+
 
             do{
                 System.out.println("Witaj w systemie logowania");
